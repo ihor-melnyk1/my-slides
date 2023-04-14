@@ -1,0 +1,29 @@
+.page {
+    height: 100vh;
+}
+
+
+.wrapper {
+    display: flex;
+    height: 100%;
+}
+
+.slides {
+    min-width: 400px;
+}
+
+.slidePreview {
+    position: relative;
+    align-self: center;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: fit-content;
+    background-color: aqua;
+}
+
+.smallSlide {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: fit-content;
+    background-color: aqua;
+}
