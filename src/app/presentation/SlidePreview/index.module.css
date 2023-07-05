@@ -1,0 +1,25 @@
+.wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: fit-content;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    user-select: none;
+}
+
+.text {
+    position: absolute;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.imageWrapper {
+    position: absolute;
+}
+
+.image {
+    resize: none;
+    pointer-events: none;
+}

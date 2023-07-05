@@ -1,0 +1,11 @@
+.flexbox {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.numberInput {
+    max-width: 50px;
+    padding: 5px;
+}

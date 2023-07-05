@@ -1,45 +1,54 @@
-import { SlideData } from '@/app/types'
-import { FC, useState } from 'react'
+import { Dimensions, SlideData } from '@/app/types'
+import { presentationSelector, setFocusedElementId } from '@/store/presentationSlice'
+import { FC, useRef, useEffect, useState, useMemo } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import SlideImage from '../SlideImage'
 import TextField from '../TextField'
 import styles from './index.module.css'
-import { BaseEditor, createEditor, Descendant } from 'slate'
-import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
-
-type CustomElement = { type: 'paragraph'; children: CustomText[] }
-type CustomText = { text: string }
-
-declare module 'slate' {
-    interface CustomTypes {
-      Editor: BaseEditor & ReactEditor
-      Element: CustomElement
-      Text: CustomText
-    }
-}
 
 type SlideProps = {
     slideData: SlideData
 }
-const initialValue = [
-    {
-      type: 'paragraph',
-      children: [{ text: 'A line of text in a paragraph.' }],
-    },
-]
 
-const Slide:FC<SlideProps> = ({slideData}) =>{
-    const [editor] = useState(() => withReact(createEditor()))
-  return (
-    <div className={styles.wrapper} >
-        {slideData.textFields?.map((field,index) => <TextField data={field} key={index}/>)}
-        <Slate editor={editor} value={initialValue} >
-            <Editable
-                onKeyDown={event => {
-                    console.log(event.key)
-                  }}
+const Slide:FC<SlideProps> = ({slideData: {textFields, backgroundColor, backgroundImage, images}}) => {
+    const ref = useRef<HTMLDivElement>(null);
+    const [slideDimensions, setSlideDimensions] = useState<Dimensions | null>(null);
+    useEffect(() => {
+        if(ref.current) {
+        setSlideDimensions({width: ref.current.offsetWidth, height: ref.current.offsetHeight})
+    }
+    }, [ref.current?.offsetHeight, ref.current?.offsetWidth]);
+    const focused = useSelector(presentationSelector).focusedElementId;
+    const dispatch = useDispatch();
+    return (
+        <div 
+            className={styles.wrapper} 
+            ref={ref} 
+            style={{
+                backgroundColor,
+                ...(backgroundImage) && {backgroundImage: `url(${backgroundImage})`}
+            }}
+            onClick={(e) => {
+                if(e.target === ref.current) {
+                    dispatch(setFocusedElementId(null));
+                }
+            }}
+        >
+            {textFields?.map((field) =>
+            <TextField 
+                data={field}
+                slideDimensions={slideDimensions}
+                key={field.id}
             />
-        </Slate>
-    </div>
-  )
+            )}
+            {images?.map((field) =>
+            <SlideImage 
+                data={field} 
+                slideDimensions={slideDimensions} 
+                key={field.id}
+            />
+            )}
+        </div>
+    )
 }
-
 export default Slide;

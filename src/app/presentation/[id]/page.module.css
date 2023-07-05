@@ -1,0 +1,42 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.slides {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-height: 100%;
+    overflow-y: auto;
+    padding: 0 20px;
+    margin: 20px auto;
+}
+
+.slide {
+    border: 2px solid black;
+    box-sizing: content-box;
+}
+
+.slide:hover {
+    border: 2px solid gray;
+}
+
+.info {
+    padding: 20px;
+    border-radius: 20px;
+    background-color: rgb(246, 247, 249);
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.flexbox {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
